@@ -1,0 +1,15 @@
+click==8.1.2              # via click-completion, click-default-group, ward
+click-completion==0.5.2   # via ward
+click-default-group==1.2.2  # via ward
+commonmark==0.9.1         # via rich
+cucumber-tag-expressions==4.1.0  # via ward
+jinja2==3.1.1             # via click-completion
+markupsafe==2.1.1         # via jinja2
+pluggy==1.0.0             # via ward
+pprintpp==0.4.0           # via ward
+pygments==2.11.2          # via rich
+rich==12.2.0              # via ward
+shellingham==1.4.0        # via click-completion
+six==1.16.0               # via click-completion
+tomli==2.0.1              # via ward
+ward==0.66.0b0            # via -r test-requirements.in

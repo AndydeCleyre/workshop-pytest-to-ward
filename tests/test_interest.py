@@ -1,22 +1,17 @@
-import pytest
+from ward import each, test
 
-from bank.bank import StudentAccount, Account
+from bank.bank import Account, StudentAccount
+
+from .conftest import account, bank
 
 
-@pytest.mark.parametrize(
-    "initial, interest, final",
-    [
-        (10, 0.1, 11),
-        (-10, 0.1, -11),
-        (-20, 0.1, -22),
-    ]
-)
-def test_pay_interest(
-        account,
-        bank,
-        initial,
-        interest,
-        final
+@test("pay interest")
+def _(
+    account=account,
+    bank=bank,
+    initial=each(10, -10, -20),
+    interest=each(0.1, 0.1, 0.1),
+    final=each(11, -11, -22),
 ):
     account.overdraft_limit = 20
     account.balance = initial
@@ -27,14 +22,9 @@ def test_pay_interest(
     assert account.balance == final
 
 
-def test_pay_all(
-        account,
-        bank
-):
-    account_2 = Account(
-        name="Second",
-        bank=bank
-    )
+@test("pay all")
+def _(account=account, bank=bank):
+    account_2 = Account(name="Second", bank=bank)
 
     account.balance = 10
     account_2.balance = 20
@@ -45,23 +35,9 @@ def test_pay_all(
     assert account_2.balance == 22
 
 
-@pytest.mark.parametrize(
-    "initial, final",
-    [
-        (-10, -10),
-        (-5, -5),
-        (10, 11)
-    ]
-)
-def test_student_account(
-        bank,
-        initial,
-        final
-):
-    account = StudentAccount(
-        "Guy Young",
-        bank=bank
-    )
+@test("student account")
+def test_student_account(bank=bank, initial=each(-10, -5, 10), final=each(-10, -5, 11)):
+    account = StudentAccount("Guy Young", bank=bank)
 
     account._balance = initial
     account.step()

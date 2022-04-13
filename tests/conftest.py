@@ -1,22 +1,13 @@
-import pytest
+from ward import fixture
 
-from bank.bank import Bank, Account
+from bank.bank import Account, Bank
 
 
-@pytest.fixture(
-    name="bank"
-)
-def make_bank():
+@fixture
+def bank():
     return Bank()
 
 
-@pytest.fixture(
-    name="account"
-)
-def make_account(
-        bank
-):
-    return Account(
-        name="Richard",
-        bank=bank
-    )
+@fixture
+def account(bank=bank):
+    return Account(name="Richard", bank=bank)
